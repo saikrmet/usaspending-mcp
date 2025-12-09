@@ -189,8 +189,9 @@ async def _close_client() -> None:
 
 if __name__ == "__main__":
     try:
-        # Run with streamable HTTP transport on localhost:8000
-        mcp.run(transport="streamable-http", port=8000, host="localhost")
+        # Run with streamable HTTP transport - use Azure's PORT env var if available
+        port = int(os.getenv("PORT", 8000))
+        mcp.run(transport="streamable-http", port=port, host="0.0.0.0")
     finally:
         # Ensure we close the underlying HTTP client on shutdown
         try:
